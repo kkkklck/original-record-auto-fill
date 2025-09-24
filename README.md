@@ -1,40 +1,40 @@
-# The Unification v6
+# The Unification · Commercial Edition
 
-A Python automation tool for consolidating fireproofing measurement data.
-It extracts measurements from Word tables, classifies structural components,
-and writes a fully formatted Excel report. A companion Word file is also
-created for easy verification.
+A specialized Python automation suite for consolidating fireproofing measurement data.  
+It extracts readings from inspection Word tables, classifies structural members, and
+produces a polished Excel deliverable together with a verification-ready Word summary.
+The latest iteration refines console guidance, improves template management, and
+adds stricter validation for production use.
 
 ---
 
 ## Features
-- **Word table parsing** – reads `.docx` documents that contain tables with
-  the keywords `"测点 1"` and `"平均值"`.
-- **Component categorization** – supports *steel columns*, *steel beams*,
-  *braces*, and *space frames*; unrecognized entries fall back to **Others**.
-- **Excel generation** – fills the template `防火excel模板μ.xlsx` and removes
-  unused worksheets automatically. Output is named
-  `The Unification_报告版.xlsx` and incremented if a file with the same name
-  already exists.
-- **Instrument auto‑detection** – determines the model (`23-90` or `24-57`)
-  from average values and formats the character `μ` using Times New Roman.
-- **Multi‑day distribution** – buckets measurements by date with configurable
-  strategies and sensible defaults. Overlapping rules favor later days and
-  orphaned data can be appended to the last day.
+- **Guided console workflow** – step-by-step prompts with contextual hints,
+  quick commands (`help`, `k`, `Q`), and graceful exit handling streamline daily use.
+- **Robust document parsing** – reads `.docx` tables containing the keywords `"测点1"`
+  and `"平均值"`, automatically normalizes merged columns, and highlights header rows.
+- **Component intelligence** – recognizes steel columns, beams, braces, space frames,
+  and falls back to **Others** with consistent formatting when data is ambiguous.
+- **Excel automation** – fills the template `原始记录excel模板.xlsx`, prunes unused
+  worksheets, keeps Times New Roman for the `μ` symbol, and chooses instrument models
+  (`23-90` / `24-57`) from average values.
+- **Progress & validation** – real-time progress indicators, minimum-row checks, and
+  duplicate-name safeguards reduce manual QA effort.
 - **Summary Word export** – generates `汇总原始记录.docx` alongside the source
-  document for manual cross‑checking.
-- **Cross‑platform paths** – works on Windows, macOS, and Linux. Remember to
-  close Word and Excel files before running the script.
+  documents for quick spot checks and archiving.
+- **Cross-platform paths** – supports Windows, macOS, and Linux; remember to close
+  Word / Excel files before running the script to avoid locked file warnings.
 
 ---
 
 ## Repository Structure
 ```
 .
-├── The Unification v6.py      # Main Python script
-├── eg.docx                    # Example Word input
-├── 防火excel模板μ.xlsx        # Excel template
-└── LICENSE
+├── Original record auto-fill program.py   # Main Python script
+├── README.md                             # Documentation
+├── LICENSE                               # Commercial license terms
+├── 原始记录excel模板.xlsx                 # Excel template
+└── 示例.docx                               # Sample Word input
 ```
 
 
@@ -47,7 +47,7 @@ created for easy verification.
    git clone https://github.com/your-username/the-unification-of-my-first-code-thinking.git
    cd the-unification-of-my-first-code-thinking
    ```
-2. **Install Python 3.6+ (3.8+ recommended)**
+2. **Install Python 3.8+ (3.6 minimum)**
 3. **Install dependencies**
    ```bash
    pip install openpyxl python-docx
@@ -56,20 +56,26 @@ created for easy verification.
    ```
 
 ---
+
 ## Usage
-1. Place your Word measurement files and the Excel template in the working
-   directory.
+1. Place your Word measurement files and the Excel template in the working directory.
 2. Run the script:
    ```bash
-   python "The Unification v6.py"
+   python "Original record auto-fill program.py"
    ```
-3. Follow the prompts to specify file paths, component type, date buckets,
-   and the number of pages to generate.
-4. The script outputs `The Unification_报告版.xlsx` and
-   `汇总原始记录.docx` in the same folder as the source files.
+3. Follow the interactive prompts to provide source paths, component types, date
+   buckets, and page counts.
+4. The script outputs `The Unification_报告版.xlsx` (auto-incremented on conflicts)
+   and `汇总原始记录.docx` next to the source Word file.
 
 ---
-Output: 防火 2 有支撑版.xlsx / 防火 2 无支撑版.xlsx
+
+## Output Options
+- `The Unification_报告版.xlsx`
+- `汇总原始记录.docx`
+
+---
 
 ## License
-This project is released under the [MIT License](LICENSE).
+This project is distributed under a **Commercial License**. Usage requires a valid
+paid license obtained from the author. See [LICENSE](LICENSE) for the full terms.
