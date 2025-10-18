@@ -36,8 +36,6 @@ from docx import Document
 from docx.shared import RGBColor, Pt
 from openpyxl.styles import Font, Alignment
 
-# made by lck, an intern of this company in 2025 summer
-
 warnings.filterwarnings("ignore", category=SyntaxWarning)
 
 TITLE = "The Unification"
@@ -2980,3 +2978,4 @@ if __name__ == "__main__":
     main()
 
                                                                                                          # v 7.1.2
+
