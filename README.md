@@ -1,62 +1,62 @@
 <div align="center">
 
-<img src="docs/assets/cover.svg" alt="原始记录自动填写 — Word 测点数据到 Excel 报告与 Word 汇总" width="100%">
+<img src="docs/assets/cover.svg" alt="Original Record Auto-Fill — Word inspection data to Excel reports and Word summaries" width="100%">
 
-# 原始记录自动填写 · The Unification
+# Original Record Auto-Fill · The Unification
 
-**防火检测数据整理 · 构件分类 · 自动分页 · Excel / Word 输出**
+**Fireproofing inspection records · Component classification · Automatic pagination · Excel and Word exports**
 
 Turn Word inspection tables into organized Excel records and a Word summary.
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3677a9?style=flat-square&logo=python&logoColor=white) ![Word](https://img.shields.io/badge/Input-DOCX-365f88?style=flat-square) ![Excel](https://img.shields.io/badge/Output-XLSX%20%2B%20DOCX-36735e?style=flat-square) [![License](https://img.shields.io/badge/License-Commercial-c68b49?style=flat-square)](LICENSE)
 
-[功能概览](#功能概览) · [四种工作模式](#四种工作模式) · [快速开始](#快速开始) · [使用指南](docs/USAGE.md) · [问题反馈](https://github.com/kkkklck/original-record-auto-fill/issues)
+[Features](#features) · [Four working modes](#four-working-modes) · [Quick start](#quick-start) · [User guide](docs/USAGE.md) · [Report an issue](https://github.com/kkkklck/original-record-auto-fill/issues)
 
 </div>
 
 ---
 
-面向**钢结构防火检测原始记录**的数据整理工具。读取 Word 中的测点表格，识别钢柱、钢梁、支撑、网架等构件，按日期或楼层分配数据，再填入 Excel 模板并生成 Word 汇总，方便核对与归档。
+A document automation tool for **steel-structure fireproofing inspection records**. It reads measurement tables from Word, classifies columns, beams, braces, space frames, and other components, then assigns records by date or floor and fills an Excel template. A companion Word summary supports checking and archiving.
 
-## 功能概览
+## Features
 
-| 能力 | 工作内容 |
+| Capability | What it handles |
 | :--- | :--- |
-| **Word 表格读取** | 识别包含“测点1”“平均值”的数据表，处理相关合并单元格 |
-| **构件分类与排序** | 区分钢柱、钢梁、支撑、网架与其他构件，按楼层或编号整理 |
-| **按规则分配** | 支持日期分桶、楼层断点、单日出表与楼层 × 日期切片 |
-| **模板填写与分页** | 复制所需工作表、填写元信息，分开处理普通页与 μ 页 |
-| **报告与汇总** | 输出 Excel 报告与 Word 汇总；Excel 同名输出自动追加序号 |
-| **交互式引导** | 命令行逐步提示，支持查看帮助、返回上一步与分配预览 |
+| **Word table extraction** | Detects measurement-point and average-value headers and processes relevant merged cells |
+| **Classification and sorting** | Organizes columns, beams, braces, space frames, and other components by floor or identifier |
+| **Rule-based allocation** | Supports date buckets, floor breakpoints, a single date, and floor-by-date slicing |
+| **Template filling and pagination** | Copies required worksheets, fills metadata, and separates ordinary and μ pages |
+| **Reports and summaries** | Exports Excel reports and a Word summary; adds a sequence number for conflicting Excel filenames |
+| **Guided interaction** | Provides console prompts, allocation previews, help, and navigation to previous steps |
 
-## 从输入到交付
+## From input to output
 
 ```mermaid
 flowchart LR
-    A[Word 测点表格] --> B[读取与构件分类]
-    B --> C[选择模式与分配规则]
-    C --> D[Excel 模板自动填写]
-    B --> E[Word 汇总]
-    D --> F[核对与归档]
+    A[Word measurement tables] --> B[Extraction and classification]
+    B --> C[Select mode and allocation rules]
+    C --> D[Fill Excel template]
+    B --> E[Word summary]
+    D --> F[Check and archive]
     E --> F
 ```
 
-## 四种工作模式
+## Four working modes
 
-| 模式 | 适合的场景 | 分配方式 |
+| Mode | Best suited to | Allocation |
 | :--- | :--- | :--- |
-| **Mode 1 · 按日期** | 同批构件分多天出表 | 配置日期与构件规则，预览后确认 |
-| **Mode 2 · 按楼层断点** | 不同楼层区间对应不同日期 | 用断点划分楼层，为每桶设置日期 |
-| **Mode 3 · 单日** | 整单使用同一日期 | 填一次日期与温度，自动整理分页 |
-| **Mode 4 · 楼层 × 日期** | 同一楼层跨多天安排 | 按计划均分或设置每日上限 |
+| **Mode 1 · By date** | Distributing one batch across several dates | Configure dates and component rules, then confirm the preview |
+| **Mode 2 · Floor breakpoints** | Assigning floor intervals to different dates | Split floors into buckets and assign a date to each |
+| **Mode 3 · Single date** | Using one date for an entire batch | Enter date and temperature once; paginate automatically |
+| **Mode 4 · Floor × date** | Splitting a floor's records across multiple dates | Allocate evenly or set daily limits |
 
-第一次体验可从 **Mode 3** 开始。各模式的输入规则见 [使用指南](docs/USAGE.md)。
+For a first run, start with **Mode 3**. See the [User guide](docs/USAGE.md) for detailed input rules.
 
-## 快速开始
+## Quick start
 
-### 1. 获取项目与依赖
+### 1. Get the project and dependencies
 
-源码使用 `str | None`、`list[int]` 等类型注解，建议使用 **Python 3.10+**。
+Use **Python 3.10+**. The source includes annotations such as `str | None` and `list[int]`.
 
 ```bash
 git clone https://github.com/kkkklck/original-record-auto-fill.git
@@ -64,81 +64,83 @@ cd original-record-auto-fill
 python -m pip install openpyxl python-docx
 ```
 
-### 2. 指定 Excel 模板
+### 2. Configure the Excel template
 
-打开 `Original record auto-fill program.py`，找到文件开头的 `XLSX_WITH_SUPPORT_DEFAULT`，将其设置为你本机的模板路径。仓库附带的模板为 **`防火excel模板μ.xlsx`**。
+Open `Original record auto-fill program.py` and set `XLSX_WITH_SUPPORT_DEFAULT` near the beginning of the file to your local template path. The included template is **`防火excel模板μ.xlsx`**.
 
-例如，在 Windows 上将配置改为实际绝对路径：
+For example, replace this Windows path with your actual absolute path:
 
 ```python
 XLSX_WITH_SUPPORT_DEFAULT = Path(r"C:\your-folder\original-record-auto-fill\防火excel模板μ.xlsx")
 ```
 
-当前源码默认值是作者本机路径，直接在另一台电脑运行前需要调整。模板工作表名称与结构应和程序匹配；涉及 μ 数据时也要保留相应 μ 模板页。
+The current default points to the author's machine, so configure it before running elsewhere. Worksheet names and layout must match the program. Retain the relevant μ template sheets when processing μ data.
 
-### 3. 运行并生成记录
+### 3. Run and generate records
 
 ```bash
 python "Original record auto-fill program.py"
 ```
 
-1. 输入 Word `.docx` 路径，可先使用仓库内的 `示例.docx`。
-2. 按提示填写工程名称、委托编号等信息。
-3. 选择工作模式，填写日期、温度及相关分配规则。
-4. 核对分配预览，确认后生成 Excel 报告。
-5. 对照 Word 汇总检查构件、数据、日期与分页结果。
+1. Enter the source Word `.docx` path. You can begin with the included `示例.docx` sample.
+2. Follow the prompts for project name, commission identifier, and other metadata.
+3. Choose a mode and enter dates, temperature, and allocation rules.
+4. Review the allocation preview and confirm report generation.
+5. Check components, values, dates, and pagination against the Word summary.
 
-### 输出文件
+### Output files
 
-| 文件 | 保存位置与用途 |
+| File | Location and purpose |
 | :--- | :--- |
-| `The Unification_报告版.xlsx` | Word 源文件同目录，用于查看与打印原始记录；重名时追加序号 |
-| `汇总原始记录.docx` | Word 源文件同目录，用于核对提取数据；再次运行前按需备份已有汇总 |
+| `The Unification_报告版.xlsx` | Saved beside the source Word document; contains the printable records and receives a sequence suffix if the name already exists |
+| `汇总原始记录.docx` | Saved beside the source document for checking extracted data; back up an existing summary before rerunning if needed |
 
-## 使用提示
+Original Chinese filenames are retained in commands and paths to match the files supplied with the program.
+
+## Usage notes
 
 <details>
-<summary><strong>输入要求与快捷指令</strong></summary>
+<summary><strong>Input requirements and shortcuts</strong></summary>
 
-Word 数据需保存在 `.docx` 表格中，相关表头包含“测点1”“平均值”。运行前关闭涉及的 Word、Excel 文件，避免文件被占用。
+Use `.docx` tables with the Chinese measurement-point and average-value headers recognized by the parser. Close the Word and Excel files involved before running to avoid file-lock errors.
 
-| 输入 | 作用 |
+| Input | Action |
 | :--- | :--- |
-| `help` | 在路径输入界面打开帮助 |
-| `q` | 在交互步骤返回上一步 |
-| `Q` | 在路径输入界面退出程序 |
+| `help` | Opens help at the source-path prompt |
+| `q` | Returns to the previous interaction step |
+| `Q` | Exits from the source-path prompt |
 
-更详细的日期、编号范围与模式说明见 [使用指南](docs/USAGE.md)。
+See the [User guide](docs/USAGE.md) for date formats, identifier ranges, and mode-specific instructions.
 
 </details>
 
 <details>
-<summary><strong>常见问题</strong></summary>
+<summary><strong>Troubleshooting</strong></summary>
 
-| 现象 | 处理建议 |
+| Symptom | Suggested action |
 | :--- | :--- |
-| 提示模板不存在 | 修改 `XLSX_WITH_SUPPORT_DEFAULT` 为本机实际路径 |
-| 未识别到数据 | 检查 `.docx` 表格与“测点1”“平均值”表头 |
-| Excel 无法保存 | 关闭正在打开的模板、目标报告后重试 |
-| 提示缺少 μ 模板 | 检查对应类别的 μ 工作表是否存在 |
-| 构件分类或日期不符合预期 | 先核对构件名称与分配预览，再调整规则 |
+| Template not found | Set `XLSX_WITH_SUPPORT_DEFAULT` to an existing local path |
+| No data recognized | Check the `.docx` table structure and expected headers |
+| Excel cannot be saved | Close the open template and destination report, then retry |
+| Missing μ template | Check that the appropriate category's μ worksheet exists |
+| Unexpected classification or dates | Review component names and the allocation preview before adjusting rules |
 
 </details>
 
-## 项目结构
+## Repository layout
 
 ```text
 original-record-auto-fill/
-├── Original record auto-fill program.py   # 命令行程序入口
-├── 防火excel模板μ.xlsx                     # Excel 模板
-├── 示例.docx                              # 示例 Word 输入
-├── LICENSE                                # 商业许可条款
-└── docs/                                  # 主页素材与使用指南
+├── Original record auto-fill program.py   # Console entry point
+├── 防火excel模板μ.xlsx                     # Excel template
+├── 示例.docx                              # Sample Word input
+├── LICENSE                                # Commercial license terms
+└── docs/                                  # Homepage artwork and user guide
 ```
 
-## 许可与反馈
+## License and feedback
 
-本项目采用 **商业许可**，使用需取得作者授权，具体范围以 [LICENSE](LICENSE) 与授权约定为准。可通过 [作者 GitHub 主页](https://github.com/kkkklck) 联系作者，通过 [Issues](https://github.com/kkkklck/original-record-auto-fill/issues) 反馈问题。
+This project uses a **commercial license**. Use requires authorization from the author; see [LICENSE](LICENSE) and your licensing agreement for the permitted scope. Contact the author through their [GitHub profile](https://github.com/kkkklck) and report problems through [Issues](https://github.com/kkkklck/original-record-auto-fill/issues).
 
 <div align="center">
 

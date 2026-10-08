@@ -1,69 +1,69 @@
-# 使用指南 · The Unification
+# User guide · The Unification
 
-[← 返回项目主页](../README.md)
+[← Back to the project](../README.md)
 
-## 输入文件
+## Input files
 
-Word 源文件应使用 `.docx`，测量数据位于包含“测点1”“平均值”等表头的表格中。模板使用仓库内的 `防火excel模板μ.xlsx`，通过程序开头的 `XLSX_WITH_SUPPORT_DEFAULT` 指定本机路径。
+Use `.docx` source documents with measurement data in tables that contain the measurement-point and average-value headers recognized by the parser. Configure `XLSX_WITH_SUPPORT_DEFAULT` to point to the included `防火excel模板μ.xlsx` template on your machine.
 
-模板工作表名称和布局是填写逻辑的一部分。请使用匹配的模板，不要仅将任意工作簿改成同一文件名。
+Worksheet names and layout are part of the filling logic. Use a compatible template; renaming an unrelated workbook does not make it compatible.
 
-## 模式选择
+## Choosing a mode
 
-### Mode 1 · 按日期分桶
+### Mode 1 · Date buckets
 
-用于将同批构件分配到多天。输入日期、构件规则；存在支撑或网架时，按提示选择编号或楼层策略。规则重叠时可选择优先级，确认分配预览后生成。
+Distribute one batch across multiple dates. Enter dates and component rules. For braces or space frames, choose the identifier-based or floor-based strategy when prompted. Select an overlap priority if needed and review the allocation before generating records.
 
-### Mode 2 · 按楼层断点
+### Mode 2 · Floor breakpoints
 
-用断点把楼层分为多个区间，每个区间配置日期及可选温度。适合按楼层分批整理。楼层排序包括地下层、地上层、机房层和屋面。
+Divide floors into intervals using breakpoints and assign dates and optional temperatures to the resulting buckets. Floor sorting includes basement floors, above-ground floors, equipment floors, and the roof.
 
-### Mode 3 · 单日模式
+### Mode 3 · Single date
 
-整单共用一个日期，温度可选。程序按构件类别与页容量自动分页，适合第一次体验。
+Use one date for the entire batch, with optional temperature. The program paginates by component category and page capacity. This is a convenient starting point for a first run.
 
-### Mode 4 · 楼层 × 日期
+### Mode 4 · Floor × date
 
-同一楼层分配到多天，可使用共用计划或逐层配置，按均分或每日上限安排。可为未配置楼层设置默认计划，剩余数据按提示处理。
+Distribute a floor's records across several dates with a shared plan or per-floor configuration. Use equal allocation or daily limits. A default plan can cover unconfigured floors; follow the prompts to handle remaining records.
 
-## 日期与快捷输入
+## Dates and shortcuts
 
-日期支持常见写法，例如 `2026-10-08`、`2026/10/08`、`20261008`。缺少年份时采用程序的日期规范化规则；生成前请核对最终日期。
+Supported date formats include `2026-10-08`, `2026/10/08`, and `20261008`. Dates without a year follow the program's normalization rules; check the resulting date before export.
 
-| 指令 | 使用位置与含义 |
+| Input | Context and action |
 | :--- | :--- |
-| `help` | 路径输入界面查看帮助，可继续查看各模式说明 |
-| `q` | 交互步骤返回上一步 |
-| `Q` | 路径输入界面退出 |
-| `*` | 对支持该指令的范围输入，表示全部接收 |
-| `lk` | 网架范围配置中表示不接收 |
-| `a` | 分配确认页将未分配构件并入最后一天 |
+| `help` | Opens help at the source-path prompt, including mode-specific instructions |
+| `q` | Returns to the previous interaction step |
+| `Q` | Exits at the source-path prompt |
+| `*` | Accepts all items in range inputs that support this command |
+| `lk` | Excludes a space-frame range where supported |
+| `a` | Assigns unallocated components to the last date at the allocation-confirmation step |
 
-以上特殊指令依赖所在步骤，以屏幕提示为准。
+Special commands depend on the current step. Follow the displayed instructions.
 
-## 普通页与 μ 页
+## Ordinary and μ pages
 
-当前程序按四位及以上纯数字、或绝对值不小于 1000 的数值等规则判断 μ 数据，并分开整理普通页和 μ 页。同一桶内普通页在前、μ 页在后；需要的类别 μ 模板页必须存在。
+The program uses rules such as four-or-more-digit integers or absolute values of at least 1000 to classify μ data. Ordinary and μ pages are handled separately; ordinary pages precede μ pages within a bucket. Retain the corresponding μ template worksheets.
 
-这是程序的输入分类规则，实际单位与检测记录仍需人工核对。程序会按数据和模板配置填写仪器等元信息，最终报告应检查其是否符合本次实际使用设备。
+This is an input-classification rule. Check the actual units in your inspection records. The program fills instrument and other metadata according to its rules and configuration; confirm they match the equipment actually used.
 
-## 生成后核对
+## Checking the output
 
-1. 检查 Word 汇总中的构件名称、类别、测点与平均值。
-2. 对照 Excel 报告核对日期、温度、仪器、分页和普通／μ 页。
-3. 检查分配预览中的未分配项是否已处理。
-4. 确认输出保存成功后再用于后续工作。
+1. Check component names, categories, readings, and averages in the Word summary.
+2. Check dates, temperatures, instruments, pagination, and ordinary/μ pages in Excel.
+3. Confirm that unallocated items in the preview have been handled.
+4. Confirm the files were saved successfully before proceeding.
 
-Excel 输出同名时会追加序号。Word 汇总文件名固定，重新运行前请按需备份。两个输出均保存在 Word 源文件同目录。
+Conflicting Excel names receive a sequence suffix. The Word summary uses a fixed filename, so back it up before rerunning if needed. Both outputs are saved beside the source Word document.
 
-## 常见问题
+## Troubleshooting
 
-- **模板不存在：**确认 `XLSX_WITH_SUPPORT_DEFAULT` 是本机存在的路径。
-- **文件被占用：**关闭相关 Word、Excel 文件后重试。
-- **数据未识别：**检查输入格式、表头和表格布局。
-- **分类异常：**核对构件命名是否符合识别规则。
-- **缺少 μ 模板：**保留对应类别的 μ 工作表。
+- **Missing template:** set `XLSX_WITH_SUPPORT_DEFAULT` to an existing local path.
+- **Locked file:** close the relevant Word and Excel files, then retry.
+- **No data recognized:** check the input format, headers, and table layout.
+- **Unexpected classification:** check component names against the recognition rules.
+- **Missing μ sheets:** retain the appropriate category's μ template worksheets.
 
-## 许可
+## License
 
-使用范围以 [商业许可](../LICENSE) 与作者授权约定为准。
+Usage is governed by the [commercial license](../LICENSE) and your authorization agreement.
